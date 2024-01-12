@@ -1,4 +1,5 @@
 ﻿using Domain.Commands;
+using Domain.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.X509Certificates;
@@ -9,18 +10,18 @@ namespace Application.Controller
     [ApiController]
     public class VeiculoController : ControllerBase
     {
-        private readonly IVeiculoService await_veiculoService;
+        private readonly IVeiculoService _veiculoService;
         public VeiculoController(IVeiculoService veiculoService)
         {
-            await_veiculoService = veiculoService;
+             _veiculoService = veiculoService;
         }
 
         [HttpPost]
         [Route("CadastrarVeiculo")]
         public async Task<IActionResult> PostAsync([FromBody] VeiculoCommands command)
         {
-            await_veiculoService.PostAsync(command)
-            return Ok();
+            
+            return Ok(await _veiculoService.PostAsync(command));
         }
         [HttpGet]
         [Route("SimularAluguel")]
