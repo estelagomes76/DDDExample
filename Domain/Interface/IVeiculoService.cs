@@ -1,4 +1,6 @@
 ﻿using Domain.Commands;
+using Domain.Enums;
+using Domain.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,8 @@ namespace Domain.Interface
         Task<string> PostAsync(VeiculoCommands command);
         void PostAsync();
         void GetAsync();
+        Task<IEnumerable<VeiculoCommands>> GetVeiculosDisponiveis();
+        Task<SimularVeiculoAluguelViewModel> SimularVeiculoAluguel(int TotalDiasSimulado, ETipoVeiculo tipoVeiculo);
 
     }
 }

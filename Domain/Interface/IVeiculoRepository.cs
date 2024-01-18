@@ -7,45 +7,17 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    public class VeiculoRepository : IVeiculoRepository
+    public  interface IVeiculoRepository
     {
-        private string stringconnection = @"Server=(localdb)\\mssqllocaldb;Database=AluguelVeiculos;Trusted_Connection=True;MultipleActiveResultSets=True";
-        public async Task<string> PostAsync(VeiculoCommand command)
-        {
-            string queryInsert = @"INSERT INTO Veiculo(Placa, AnoFabricacao,TipoVeiculoId,Estado, MontadoraId)
-                                 Values(@Placa, @AnoFabricacao,@TipoVeiculoId,@Estado, @Montadora)";
+        //A interface é um contrato , apenas usamos para adicionar metodos, não é feita implementação de nada
 
-            using (SqlConnection conn = new SqlConnection(stringconnection))
-            {
-                conn.Execute(queryInsert, new
-                {
-                    Placa = command.Placa,
-                    AnoFabricacao = command.AnoFabricacao,
-                    TipoVeiculo = (int)command.TipoVeiculo,
-                    Estado = command.Estado,
-                    Montadora = (int)command.Montadora,
+        Task<string> PostAsync(VeiculoCommands command);
+        void PostAsync();
+        void GetAsync();
+        Task<IEnumerable<VeiculoCommands>> GetVeiculosDisponiveis();
+        Task<VeiculoPreco>
 
-                });
-                return "Veiculo cadastrado com sucesso";
-
-            }
-        }
-        public void PostAsync()
-        {
-
-        }
-        public void Getsync()
-        {
-
-        }
-
-        public void GetAsync()
-        {
-            throw new NotImplementedException();
-        }
     }
 
 
 }
-tem menu de contexto
-Redigir

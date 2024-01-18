@@ -1,6 +1,9 @@
 ﻿
+using Domain.Commands;
 using Domain.Enums;
 using Domain.Interface;
+using Domain.ViewModel;
+using Infrastructure.Repository;
 
 
 namespace Service.Services
@@ -20,7 +23,7 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public async Task<string> PostAsync(VeiculoCommand command)
+        public async Task<string> PostAsync(VeiculoCommands command)
         {
             if (command == null)
                 return "Todos os Campos são Obrigatórios";
@@ -38,16 +41,26 @@ namespace Service.Services
             return await _repository.PostAsync(command);
         }
 
-        public void PostAsync()
+        public async Task<SimularVeiculoAluguelViewModel>SimularVeiculoAluguel(int totalDiasSimulado, ETipoVeiculo tipoVeiculo)
         {
-            throw new NotImplementedException();
+            var veiculoPreco = await _repository.GetPrecoDiaria(tipoVeiculo);
+            double taxaEstadual = 10.50;
+            double taxaFederal = 3.5;
+            double taxaMunicipal = 13.5;
+
+            var simulacao = new SimularVeiculoAluguelViewModel();
+            simulacao.TotalDiasSimulado = totalDiasSimulado;
+            simulacao.TotalDiasSimulado Taxas = (decimal)(taxaMunicipal + taxaEstadual + taxaFederal);
+            simulacao.TipoVeiculo = tipoVeiculo;
+            simulacao.ValorDiaria = veiculoPreco.Preco
+            simulacao.ValorTotal = (totalDiasSimulado * veiculoPreco.Preco) + simulacao.Taxas;
+            
+        return simulacao
+
         }
+      
     }
 }
 
-public void PostAsync()
-        {
-            throw new NotImplementedException();
-        }
-    }
-}
+
+
